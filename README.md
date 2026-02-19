@@ -1,4 +1,4 @@
-Update is coming , be patient !
+***Update is coming , be patient ! under construction***
 
 bash to pack both model´s folder , 
 in 1 file , so 2 files at the end.
@@ -15,6 +15,7 @@ then you can throw them to a other place just as a backup.
 #################################################################################
 
 <img width="400" height="229" alt="image" src="https://github.com/user-attachments/assets/05f315fc-a64a-44ab-a419-ade5ff02b1b5" />
+
 Bastion AI Nexus - Tool new function:
 What does this "seed" do?
 In the AI ​​world (as with Stable Diffusion or AnimateDiff), every image or video is initially created from pure,
