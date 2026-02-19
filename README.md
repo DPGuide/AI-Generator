@@ -1,21 +1,21 @@
-but at the *.exe you choose the Time ,
-for 1-10 sec or more ,
-for now i only have tested and worked most time with aianimated_hq.py ,
-so the higher resolution ,
-work but yeah ! i have an GTX1060 ,
-that sayed enough !
-i use +47GB sd15 Model ! 
+Update is coming , be patient !
 
-best way for HQ take a picture 512x512 and make xoure owen scene with it !
-Let´s make youre poictures alive !
 
-He only creates one file,
-no snippet work!
-Because of too many snippets,
-completely different images often result,
-which can be funny, but is useless!
+#################################################################################
+.\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
+.\tba_packer.exe "C:\AI\Models\sd15" "C:\AI\Models\sd15.tba"
+#################################################################################
 
-no i will not share the c++ code ,
-its use my owen technic which is NEXTGEN one and only on the PLANET !
-Like the Archiver , the Recorder and , and , and .....
+<img width="400" height="229" alt="image" src="https://github.com/user-attachments/assets/05f315fc-a64a-44ab-a419-ade5ff02b1b5" />
+Bastion AI Nexus - Tool new function:
+What does this "seed" do?
+In the AI ​​world (as with Stable Diffusion or AnimateDiff), every image or video is initially created from pure,
+random "image noise." The seed determines what this noise looks like.
 
+Fixed value (e.g., 42): If you leave the value at 42, load the same image, and enter the same text,
+the AI ​​will produce the exact same video every time. This is extremely important
+if you're refining a prompt and want to see what changes without randomness interfering.
+
+The "R" button: When you click the R (Random), your C++ program generates a completely new,
+random number in the field. When you then click Generate,
+the AI ​​calculates a completely different movement for your image, even though the text remains the same!
