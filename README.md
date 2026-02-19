@@ -1,9 +1,13 @@
 Update is coming , be patient !
 
-
+bash to pack hole model´s folder , 
+in 1 file then you can throw them to a other place just as a backup.
 #################################################################################
+
 .\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
+
 .\tba_packer.exe "C:\AI\Models\sd15" "C:\AI\Models\sd15.tba"
+
 #################################################################################
 
 <img width="400" height="229" alt="image" src="https://github.com/user-attachments/assets/05f315fc-a64a-44ab-a419-ade5ff02b1b5" />
