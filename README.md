@@ -4,9 +4,20 @@
 
 ***PURGE CACHE implemented***
 #################################################################################
+***All files which you realy need on C:,but make a backup of the models,
+on a other partition D: or where ever.
+. The SD15 Folder
+Go to C:\AI\Models\sd15. Delete everything there except for these folders
+(which you copied from the deep .cache maze to the very beginning):
+feature_extractor,scheduler,text_encoder,tokenizer,unet,vae.
+model_index.json (This file is the key; it must be located here!)
+2. The Motion Adapter Folder
+Go to C:\AI\Models\motion_adapter. Only these two files should be located here:
+config.json
+diffusion_pytorch_model.safetensors***
 
+now use the packer
 .\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
-
 .\tba_packer.exe "C:\AI\Models\sd15" "C:\AI\Models\sd15.tba"
 
 
