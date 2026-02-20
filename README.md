@@ -21,12 +21,11 @@ https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb
 
 https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb1e4/sd-master-c5eb1e4-bin-win-cuda12-x64.zip
 
-#################################################################################
-
 ***open with the tools youre models and motions,
 but the *.dll annd the *.exe etc in same folder where The Bastion is***
 
-#################################################################################
+<img width="737" height="417" alt="image" src="https://github.com/user-attachments/assets/dee68071-97f5-4f11-937f-c1147390ac3a" />
+
 
 <img width="499" height="406" alt="image" src="https://github.com/user-attachments/assets/92440721-5f96-4d61-b290-2937bd8bac34" />
 
