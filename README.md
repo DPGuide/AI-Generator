@@ -62,7 +62,6 @@ The ***"R"*** button: When you click the R (Random), your C++ program generates 
 random number in the field. When you then click Generate,
 the AI ​​calculates a completely different movement for your image, even though the text remains the same!
 
-
 Bonus: Find Faster & Better Models
 
 ***Civitai*** (The best place to start): Search for "SD 1.5 Checkpoints". Popular classics include Realistic Vision and Epic Realism. ***Not Tested Yet**
