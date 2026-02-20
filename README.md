@@ -42,4 +42,4 @@ Realistic Vision V6.0 B1 – Enormous level of detail for humans.
 
 DreamShaper 8 – Very versatile, great colors.
 
-*** links / url will be added soon ***
+***links / url will be added soon***
