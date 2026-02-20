@@ -17,6 +17,8 @@ Go to C:\AI\Models\motion_adapter. Delete everything and keep only that file whi
 
 <img width="738" height="325" alt="image" src="https://github.com/user-attachments/assets/e895ac3e-0c7c-48be-a651-ff4f83b205d2" />
 
+
+
 ***Now open youre CMD in youre folder where you have youre tba_packe.exe und run both command!***
 
 .\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
