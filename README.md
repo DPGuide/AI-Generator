@@ -1,5 +1,6 @@
 ***Update is coming , be patient ! under construction***
-***Only Gen Pic work´s for now, the problem is sd-cli.exe
+***Only Gen Pic work´s for now,
+the problem is sd-cli.exe
 havent now a --motion implemented for Gen Video***
 ***optimized for GTX1060***
 
