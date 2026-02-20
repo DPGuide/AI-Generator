@@ -48,6 +48,9 @@ but the *.dll annd the *.exe etc in same folder where The Bastion is***
 
 <img width="977" height="857" alt="image" src="https://github.com/user-attachments/assets/b21dfc2c-cead-4fc8-bdba-49e288704a52" />
 
+<img width="515" height="514" alt="image" src="https://github.com/user-attachments/assets/2746c45b-5933-4461-a9a8-4a86cd56c423" />
+
+
 
 
 ***First time where i test Pic2Pic, but if sthis takes so long , too!
