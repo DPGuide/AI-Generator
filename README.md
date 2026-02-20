@@ -3,7 +3,7 @@
 
 ***you need :***
 
-***Models***
+***Models, or what kind of models you wanna use***
 
 https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
 
