@@ -29,6 +29,8 @@ https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb
 
 or for up2date with much more
 
+https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_12.8.0_571.96_windows.exe ***GTX1060***
+
 https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_network
 
 
