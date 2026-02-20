@@ -43,14 +43,8 @@ but the *.dll annd the *.exe etc in same folder where The Bastion is***
 
 <img width="737" height="417" alt="image" src="https://github.com/user-attachments/assets/dee68071-97f5-4f11-937f-c1147390ac3a" />
 
-
-<img width="501" height="405" alt="image" src="https://github.com/user-attachments/assets/3c91fd16-d5ff-4d4e-bb0b-990b4929149d" />
-
 ***every 10 % the preview should be updated***
 <img width="783" height="651" alt="image" src="https://github.com/user-attachments/assets/6ebfd7ef-9684-4dbc-a505-77e977f10a4b" />
-
-
-<img width="515" height="514" alt="image" src="https://github.com/user-attachments/assets/2746c45b-5933-4461-a9a8-4a86cd56c423" />
 
 
 
