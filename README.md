@@ -21,7 +21,8 @@ at the end automaticly***
 
 ***Models, or what kind of models you wanna use but if you***'
 
- ***Wan2.1 Native Module for videos***
+ ***Wan2.1 Native Module for videos (videos arent tested,
+ only with python but those was crap***
 
 https://huggingface.co/guoyww/animatediff/tree/main
 
