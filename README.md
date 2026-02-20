@@ -1,9 +1,5 @@
 ***Update my Tool is Perfect***
 
-***Only Gen Pic work´s for now,
-the problem is sd-cli.exe
-havent now a --motion / im workin on it. looks like i use an old version of sd-cli*** 
-
 ***optimized for GTX1060*** 
 
 ***TBA PACKER Implemeted,
@@ -12,7 +8,6 @@ it will purge cache
 at the end automaticly***
 
 ***Priview all 10 %***
-
 
 ***you need :***
 
