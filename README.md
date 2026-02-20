@@ -17,7 +17,9 @@ config.json
 diffusion_pytorch_model.safetensors***
 
 now use the packer
+
 .\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
+
 .\tba_packer.exe "C:\AI\Models\sd15" "C:\AI\Models\sd15.tba"
 
 
