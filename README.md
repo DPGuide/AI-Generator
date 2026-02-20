@@ -23,7 +23,9 @@ at the end automaticly***
 
 https://huggingface.co/guoyww/animatediff/tree/main
 
-https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
+chose one for youre hardware , GTX1060 only the lil ones !
+
+[https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/tree/main/split_files/diffusion_models)
 
 ***Nvidia tools , no more Python ! c++ only***
 
