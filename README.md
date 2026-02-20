@@ -2,7 +2,7 @@
 
 ***Only Gen Pic work´s for now,
 the problem is sd-cli.exe
-havent now a --motion*** 
+havent now a --motion / im workin on it. looks like i use an old version of sd-cli*** 
 
 **implemented for Gen Video
 but all runs superfast and stable***
