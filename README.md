@@ -57,11 +57,12 @@ the AI ​​calculates a completely different movement for your image, even tho
 
 Bonus: Find Faster & Better Models
 
-***Civitai*** (The best place to start): Search for "SD 1.5 Checkpoints". Popular classics include Realistic Vision and Epic Realism.
+***Civitai*** (The best place to start): Search for "SD 1.5 Checkpoints". Popular classics include Realistic Vision and Epic Realism. ***Not Tested Yet**
 
-***Hugging Face*** (The technical source):
 
-***Realistic Vision V6.0 B1*** – Enormous level of detail for humans.
+***Hugging Face*** (The technical source): ***only few i have tested**
 
-***DreamShaper 8*** – Very versatile, great colors.
+***Realistic Vision V6.0 B1*** – Enormous level of detail for humans.***Not Tested Yet**
+
+***DreamShaper 8*** – Very versatile, great colors.***Not Tested Yet**
 
