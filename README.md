@@ -5,9 +5,9 @@
 
 ***Models, or what kind of models you wanna use but if you***
 
-https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
+https://huggingface.co/guoyww/animatediff/tree/main
 
-https://huggingface.co/guoyww/animatediff/resolve/main/mm_sd_v15_v2.ckpt
+https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
 
 ***Nvidia tools , no more Python ! c++ only***
 
