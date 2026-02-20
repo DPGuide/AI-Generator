@@ -27,7 +27,8 @@ but the *.dll annd the *.exe etc in same folder where The Bastion is***
 <img width="737" height="417" alt="image" src="https://github.com/user-attachments/assets/dee68071-97f5-4f11-937f-c1147390ac3a" />
 
 
-<img width="499" height="406" alt="image" src="https://github.com/user-attachments/assets/92440721-5f96-4d61-b290-2937bd8bac34" />
+<img width="501" height="405" alt="image" src="https://github.com/user-attachments/assets/3c91fd16-d5ff-4d4e-bb0b-990b4929149d" />
+
 
 
 Bastion AI Nexus - Tool new function:
