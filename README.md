@@ -28,3 +28,18 @@ if you're refining a prompt and want to see what changes without randomness inte
 The "R" button: When you click the R (Random), your C++ program generates a completely new,
 random number in the field. When you then click Generate,
 the AI ​​calculates a completely different movement for your image, even though the text remains the same!
+
+
+Bonus: Find Faster & Better Models
+
+Once this path bug is fixed, the system will run like a dream. Here are the promised goldmines for better models:
+
+Civitai (The best place to start): Search for "SD 1.5 Checkpoints". Popular classics include Realistic Vision and Epic Realism.
+
+Hugging Face (The technical source):
+
+Realistic Vision V6.0 B1 – Enormous level of detail for humans.
+
+DreamShaper 8 – Very versatile, great colors.
+
+*** links / url will be added soon ***
