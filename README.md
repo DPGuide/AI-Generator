@@ -47,7 +47,8 @@ Go to C:\AI\Models\motion_adapter.
 
 #################################################################################
 
-<img width="403" height="256" alt="image" src="https://github.com/user-attachments/assets/0a80b013-ad2f-489f-b80b-f004ac57c34e" />
+<img width="499" height="406" alt="image" src="https://github.com/user-attachments/assets/92440721-5f96-4d61-b290-2937bd8bac34" />
+
 
 Bastion AI Nexus - Tool new function:
 What does this "seed" do?
