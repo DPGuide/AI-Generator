@@ -12,9 +12,13 @@ https://huggingface.co/guoyww/animatediff/resolve/main/mm_sd_v15_v2.ckpt
 ***Nvidia tools , no more Python ! c++ only***
 
 https://developer.download.nvidia.com/compute/cuda/12.0.0/local_installers/cuda_12.0.0_527.41_windows.exe
+
 *.dll
+
 https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb1e4/cudart-sd-bin-win-cu12-x64.zip
+
 *.exe
+
 https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb1e4/sd-master-c5eb1e4-bin-win-cuda12-x64.zip
 
 #################################################################################
