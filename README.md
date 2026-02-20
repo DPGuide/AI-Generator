@@ -10,7 +10,7 @@ then you can throw them to a other place just as a backup.
 .\tba_packer.exe "C:\AI\Models\sd15" "C:\AI\Models\sd15.tba"
 
 
-<img width="696" height="138" alt="image" src="https://github.com/user-attachments/assets/70d7c63f-fc3c-48b7-8e53-b0dba39e588e" />
+<img width="863" height="112" alt="image" src="https://github.com/user-attachments/assets/b94da981-4bdd-4b4f-b3b7-f351b8758676" />
 
 #################################################################################
 
