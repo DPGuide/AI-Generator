@@ -2,13 +2,7 @@
 ***optimized for GTX1060*** you can change by better grafic cards the ai_animated.py
 "VRAM lifesaver approach" (16 frames, 448x448 resolution and xformers)
 
-***Press the Windows key + R on your keyboard.
-Type this exactly: %temp% and press Enter.
-Delete everything you can there ^^, it's just cache junk! After that, you'll have space on your hard drive again.
-bash to pack both model´s folder , 
-in 1 file , so 2 files at the end.
-then you can throw them to a other place just as a backup.
-and reboot youre system***
+***PURGE CACHE implemented***
 #################################################################################
 
 .\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
