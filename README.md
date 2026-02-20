@@ -59,7 +59,8 @@ but the *.dll annd the *.exe etc in same folder where The Bastion is***
 
 
 ***every 10 % the preview should be updated! LOL he makes from a Anime Pic a real version***
-<img width="783" height="651" alt="image" src="https://github.com/user-attachments/assets/6ebfd7ef-9684-4dbc-a505-77e977f10a4b" />
+<img width="764" height="626" alt="image" src="https://github.com/user-attachments/assets/d22f6e8f-3f6d-4c0c-9198-c07a9bec1e0a" />
+
 
 ***Bastion AI Nexus - Tool new function:***
 What does this "seed" do?
