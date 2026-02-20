@@ -1,6 +1,5 @@
 ***Update is coming , be patient ! under construction***
-***optimized for GTX1060 you can change by better grafic cards the ai_animated.py
-"VRAM lifesaver approach" (16 frames, 448x448 resolution and xformers)***
+***optimized for GTX1060***
 
 ***PURGE CACHE implemented***
 #################################################################################
