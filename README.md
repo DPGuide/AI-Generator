@@ -3,6 +3,8 @@
 
 ***you need :***
 
+https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
+
 https://developer.download.nvidia.com/compute/cuda/12.0.0/local_installers/cuda_12.0.0_527.41_windows.exe
 
 https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb1e4/sd-master-c5eb1e4-bin-win-cuda12-x64.zip
