@@ -1,8 +1,6 @@
 ***Update is coming , be patient ! under construction***
 ***optimized for GTX1060***
 
-***PURGE CACHE implemented***
-
 #################################################################################
 
 ***All files which you realy need on C:,but make a backup of the models,
