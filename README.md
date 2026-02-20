@@ -49,14 +49,6 @@ but the *.dll annd the *.exe etc in same folder where The Bastion is***
 ***every 10 % the preview should be updated! LOL he makes from a Anime Pic a real version***
 <img width="783" height="651" alt="image" src="https://github.com/user-attachments/assets/6ebfd7ef-9684-4dbc-a505-77e977f10a4b" />
 
-
-
-
-***First time where i test Pic2Pic, but if sthis takes so long , too!
-then i will upgrade hole things with my Bastion File System***
-
-
-
 ***Bastion AI Nexus - Tool new function:***
 What does this "seed" do?
 In the AI ​​world (as with Stable Diffusion or AnimateDiff), every image or video is initially created from pure,
