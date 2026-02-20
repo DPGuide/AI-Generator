@@ -40,12 +40,12 @@ but the *.dll annd the *.exe etc in same folder where The Bastion is***
 <img width="975" height="508" alt="image" src="https://github.com/user-attachments/assets/f9c9db96-b862-4c8d-98fe-abf65eab775f" />
 
 
-Bastion AI Nexus - Tool new function:
+***Bastion AI Nexus - Tool new function:***
 What does this "seed" do?
 In the AI ​​world (as with Stable Diffusion or AnimateDiff), every image or video is initially created from pure,
 random "image noise." The seed determines what this noise looks like.
 
-Fixed value (e.g., 42): If you leave the value at 42, load the same image, and enter the same text,
+Fixed value (e.g., ***42***): If you leave the value at 42, load the same image, and enter the same text,
 the AI ​​will produce the exact same video every time. This is extremely important
 if you're refining a prompt and want to see what changes without randomness interfering.
 
@@ -66,4 +66,3 @@ Realistic Vision V6.0 B1 – Enormous level of detail for humans.
 
 DreamShaper 8 – Very versatile, great colors.
 
-***links / url will be added soon***
