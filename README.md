@@ -9,9 +9,8 @@ on a other partition D: or where ever.
 . The SD15 Folder
 Go to C:\AI\Models\sd15. Delete ".chache" folder
 2. The Motion Adapter Folder
-Go to C:\AI\Models\motion_adapter. delete ".chache" folder***
-
-now use the packer
+Go to C:\AI\Models\motion_adapter. delete ".chache" folder
+now use the packer***
 
 .\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
 
