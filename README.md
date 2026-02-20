@@ -7,7 +7,8 @@ Type this exactly: %temp% and press Enter.
 Delete everything you can there ^^, it's just cache junk! After that, you'll have space on your hard drive again.
 bash to pack both model´s folder , 
 in 1 file , so 2 files at the end.
-then you can throw them to a other place just as a backup.***
+then you can throw them to a other place just as a backup.
+and reboot youre system***
 #################################################################################
 
 .\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
