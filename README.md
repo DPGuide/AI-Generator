@@ -8,6 +8,7 @@ on a other partition D: or where ever.
 . The SD15 Folder
 Go to C:\AI\Models\sd15. Delete every modell which you dont want and keep only that modell which you want.
 python is dumb***
+
 🫣
 
 ***2. The Motion Adapter Folder
