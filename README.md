@@ -21,8 +21,10 @@ Go to C:\AI\Models\motion_adapter. Delete everything and keep only that file whi
 
 .\tba_packer.exe "C:\AI\Models\sd15" "C:\AI\Models\sd15.tba"
 
+***now you can delete those to folders , because you still have a backup of it !***
 
-<img width="863" height="112" alt="image" src="https://github.com/user-attachments/assets/b94da981-4bdd-4b4f-b3b7-f351b8758676" />
+<img width="782" height="253" alt="image" src="https://github.com/user-attachments/assets/20e74fcf-310c-45c9-a90f-2b38854121f5" />
+
 
 #################################################################################
 
