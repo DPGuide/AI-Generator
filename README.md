@@ -1,21 +1,24 @@
 ***Update is coming , be patient ! under construction***
 ***optimized for GTX1060***
 
-***The problem is those modells needs python , bestway are modells where you can only use with c++***
+***you need :***
+
+https://developer.download.nvidia.com/compute/cuda/12.0.0/local_installers/cuda_12.0.0_527.41_windows.exe
+
+https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb1e4/sd-master-c5eb1e4-bin-win-cuda12-x64.zip
+
 
 #################################################################################
 
 ***All files which you realy need on C:,but make a backup of the models,
 on a other partition D: or where ever.
 . The SD15 Folder
-Go to C:\AI\Models\sd15. Delete every modell which you dont want and keep only that modell which you want.
-python is dumb***
+Go to C:\AI\Models\sd15. 
 
 🫣
 
 ***2. The Motion Adapter Folder
-Go to C:\AI\Models\motion_adapter. Delete every modell which you dont want and keep only that modell which you want.
-python is dumb***
+Go to C:\AI\Models\motion_adapter. 
 
 🫣
 
@@ -27,7 +30,6 @@ python is dumb***
 
 ***now you can delete those two folders , because you still have a backup of it !***
 
-<img width="782" height="253" alt="image" src="https://github.com/user-attachments/assets/20e74fcf-310c-45c9-a90f-2b38854121f5" />
 
 
 #################################################################################
