@@ -3,7 +3,13 @@
 
 ***you need :***
 
+***Models***
+
 https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
+
+https://huggingface.co/guoyww/animatediff/resolve/main/mm_sd_v15_v2.ckpt
+
+***Nvidia tools , no more Python ! c++ only***
 
 https://developer.download.nvidia.com/compute/cuda/12.0.0/local_installers/cuda_12.0.0_527.41_windows.exe
 
