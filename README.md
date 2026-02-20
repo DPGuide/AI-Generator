@@ -1,3 +1,8 @@
+***For unpack sd-server.exe.tba & sd-cli.exe.tba,
+please use my ArShiva***
+
+https://github.com/DPGuide/Universal-ArShiva/blob/main/Universal%20ArShiva.exe
+
 ***optimized for GTX1060*** 
 
 ***TBA PACKER Implemeted,
