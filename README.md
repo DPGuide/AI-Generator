@@ -47,7 +47,8 @@ https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb
 ***open with the tools youre models and motions,
 but the *.dll annd the *.exe etc in same folder where The Bastion is***
 
-<img width="737" height="417" alt="image" src="https://github.com/user-attachments/assets/dee68071-97f5-4f11-937f-c1147390ac3a" />
+<img width="706" height="371" alt="image" src="https://github.com/user-attachments/assets/2101c434-a4a1-40a2-999e-4573760afadc" />
+
 
 ***every 10 % the preview should be updated! LOL he makes from a Anime Pic a real version***
 <img width="783" height="651" alt="image" src="https://github.com/user-attachments/assets/6ebfd7ef-9684-4dbc-a505-77e977f10a4b" />
