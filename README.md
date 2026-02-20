@@ -1,7 +1,10 @@
-***For unpack sd-server.exe.tba & sd-cli.exe.tba,
-please use my ArShiva,
-otherwise the files are 
-to large to uplaod at github***
+***For unpack sd-server.exe.tba & sd-cli.exe.tba,***
+
+***please use my ArShiva,***
+
+***otherwise the files are***
+
+***to large to uplaod at github***
 
 https://github.com/DPGuide/Universal-ArShiva/blob/main/Universal%20ArShiva.exe
 
