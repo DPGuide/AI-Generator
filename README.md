@@ -56,13 +56,11 @@ the AI ​​calculates a completely different movement for your image, even tho
 
 Bonus: Find Faster & Better Models
 
-Once this path bug is fixed, the system will run like a dream. Here are the promised goldmines for better models:
+***Civitai*** (The best place to start): Search for "SD 1.5 Checkpoints". Popular classics include Realistic Vision and Epic Realism.
 
-Civitai (The best place to start): Search for "SD 1.5 Checkpoints". Popular classics include Realistic Vision and Epic Realism.
+***Hugging Face*** (The technical source):
 
-Hugging Face (The technical source):
+***Realistic Vision V6.0 B1*** – Enormous level of detail for humans.
 
-Realistic Vision V6.0 B1 – Enormous level of detail for humans.
-
-DreamShaper 8 – Very versatile, great colors.
+***DreamShaper 8*** – Very versatile, great colors.
 
