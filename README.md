@@ -1,5 +1,4 @@
-***Update is coming , be patient!
-under construction***
+***Update my Tool is Perfect***
 
 ***Only Gen Pic work´s for now,
 the problem is sd-cli.exe
