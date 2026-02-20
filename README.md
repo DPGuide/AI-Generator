@@ -20,7 +20,7 @@ and reboot youre system***
 
 #################################################################################
 
-<img width="400" height="229" alt="image" src="https://github.com/user-attachments/assets/05f315fc-a64a-44ab-a419-ade5ff02b1b5" />
+<img width="403" height="256" alt="image" src="https://github.com/user-attachments/assets/0a80b013-ad2f-489f-b80b-f004ac57c34e" />
 
 Bastion AI Nexus - Tool new function:
 What does this "seed" do?
