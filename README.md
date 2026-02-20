@@ -26,7 +26,9 @@ https://developer.download.nvidia.com/compute/cuda/12.0.0/local_installers/cuda_
 *.dll
 
 https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb1e4/cudart-sd-bin-win-cu12-x64.zip
+
 or for up2date with much more
+
 https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_network
 
 
