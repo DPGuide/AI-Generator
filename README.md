@@ -23,27 +23,8 @@ https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb
 
 #################################################################################
 
-***All files which you realy need on C:,but make a backup of the models,
-on a other partition D: or where ever.
-. The SD15 Folder
-Go to C:\AI\Models\sd15. 
-
-🫣
-
-***2. The Motion Adapter Folder
-Go to C:\AI\Models\motion_adapter. 
-
-🫣
-
-***Now open youre CMD in youre folder where you have youre tba_packe.exe und run both command!***
-
-.\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
-
-.\tba_packer.exe "C:\AI\Models\sd15" "C:\AI\Models\sd15.tba"
-
-***now you can delete those two folders , because you still have a backup of it !***
-
-
+***open with the tools youre models and motions,
+but the *.dll annd the *.exe etc in same folder where The Bastion is***
 
 #################################################################################
 
