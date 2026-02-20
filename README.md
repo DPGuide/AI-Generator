@@ -8,7 +8,7 @@ havent now a --motion***
 but all runs superfast and stable***
 
 ***optimized for GTX1060*** 
-maybe i will implement my Packer soon, but not ***Pic2Pic***
+maybe i will implement my Packer soon, but not for ***Pic2Pic***
 there is no need
 
 ***you need :***
