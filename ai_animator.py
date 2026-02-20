@@ -83,8 +83,6 @@ MOTION_ADAPTER_PATH = r"C:\AI\Models\motion_adapter"
 SD15_PATH = r"C:\AI\Models\sd15"
 RAW_OUTPUT = "final_ai_video.mp4"
 
-MAX_FRAMES_PER_CHUNK = 24 
-
 def update_status(message):
     try:
         with open("ai_status.txt", "w", encoding="utf-8") as f:
@@ -94,18 +92,21 @@ def update_status(message):
 
 def mount_tba_smart(tba_name, original_path):
     tba_file = original_path + ".tba"
-    if os.path.exists(tba_file):
-        try:
-            temp_dir = tempfile.mkdtemp(prefix=f"bastion_{tba_name}_")
-            loader = TBALoader(tba_file)
-            loader.extract_to_temp(temp_dir)
-            update_status(f"TBA MOUNTED: {tba_name}")
-            return temp_dir, temp_dir
-        except Exception as e:
-            print(f"TBA ERROR: {e}")
+    print(f"\n[SUCHE] Prüfe auf {tba_name} TBA: {tba_file}")
     
-    update_status(f"FALLBACK: Using folder for {tba_name}")
-    return original_path, None
+    if not os.path.exists(tba_file):
+        print(f"[FEHLER] Die Datei {tba_file} fehlt auf der Festplatte!")
+        update_status(f"FALLBACK: Using folder for {tba_name}")
+        return original_path, None
+        
+    # Kein heimliches Verschlucken von Fehlern mehr! 
+    # Wenn die TBA kaputt oder veraltet ist, kracht es hier laut und deutlich.
+    temp_dir = tempfile.mkdtemp(prefix=f"bastion_{tba_name}_")
+    loader = TBALoader(tba_file)
+    loader.extract_to_temp(temp_dir)
+    
+    update_status(f"TBA MOUNTED: {tba_name}")
+    return temp_dir, temp_dir
 
 def generate_chunk(pipe, image, prompt, num_frames, generator):
     def progress_callback(step, timestep, latents):
@@ -175,24 +176,38 @@ def run_ai():
             use_karras_sigmas=True
         )
         
+        # ==========================================================
+        # --- DER NEUE VRAM RETTUNGS-BLOCK FÜR DIE GTX 1060 ---
+        # ==========================================================
+        
         # Speicheroptimierung für GTX 1060
         pipe.enable_vae_slicing()
         pipe.enable_model_cpu_offload() 
         
+        try:
+            # Der ultimative Speicher-Sparer, falls installiert
+            pipe.enable_xformers_memory_efficient_attention()
+        except:
+            pass
+        
         generator = torch.Generator("cuda").manual_seed(seed)
         
-        # FPS Logik
-        actual_frames = MAX_FRAMES_PER_CHUNK
+        # FPS Logik - Für 6GB VRAM zwingend drosseln!
+        actual_frames = 16 # MAXIMAL 16 Frames für die 1060, 24 ist der Tod!
         dynamic_fps = 8.0 # Standard
         
         update_status("GENERATING...")
-        image = load_image(img_path).resize((512, 512))
+        
+        # Auflösung leicht senken schützt vor dem Crash! (448 statt 512)
+        image = load_image(img_path).resize((448, 448)) 
         chunk_frames = generate_chunk(pipe, image, prompt, actual_frames, generator)
         
+        # ==========================================================
+
         # 3. VIDEO SPEICHERN
         chunk_file = "temp_output.mp4"
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        out = cv2.VideoWriter(chunk_file, fourcc, dynamic_fps, (512, 512))
+        out = cv2.VideoWriter(chunk_file, fourcc, dynamic_fps, (448, 448)) # Hier auch auf 448 geändert
         for frame in chunk_frames:
             out.write(cv2.cvtColor(np.array(frame), cv2.COLOR_RGB2BGR))
         out.release()
