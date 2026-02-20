@@ -1,5 +1,3 @@
-***Update my Tool is Perfect***
-
 ***optimized for GTX1060*** 
 
 ***TBA PACKER Implemeted,
