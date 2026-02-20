@@ -8,8 +8,14 @@ havent now a --motion***
 but all runs superfast and stable***
 
 ***optimized for GTX1060*** 
-maybe i will implement my Packer soon, but not for ***Pic2Pic***
-there is no need
+
+***TBA PACKER Implemeted,
+more Stable and much faster,
+it will purge cache
+at the end automaticly***
+
+***Priview all 10 %***
+
 
 ***you need :***
 
