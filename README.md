@@ -8,10 +8,14 @@
 ***All files which you realy need on C:,but make a backup of the models,
 on a other partition D: or where ever.
 . The SD15 Folder
-Go to C:\AI\Models\sd15. Delete ".chache" folder
-2. The Motion Adapter Folder
-Go to C:\AI\Models\motion_adapter. delete ".chache" folder
-now use the packer***
+Go to C:\AI\Models\sd15. Delete everything and keep only that file which you want.***
+
+<img width="722" height="242" alt="image" src="https://github.com/user-attachments/assets/75ee0a3c-9a71-477a-841a-83aeb9792fcb" />
+
+***2. The Motion Adapter Folder
+Go to C:\AI\Models\motion_adapter. Delete everything and keep only that file which you want.***
+
+<img width="738" height="325" alt="image" src="https://github.com/user-attachments/assets/e895ac3e-0c7c-48be-a651-ff4f83b205d2" />
 
 .\tba_packer.exe "C:\AI\Models\motion_adapter" "C:\AI\Models\motion_adapter.tba"
 
