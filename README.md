@@ -19,7 +19,9 @@ at the end automaticly***
 
 ***you need :***
 
-***Models, or what kind of models you wanna use but if you***
+***Models, or what kind of models you wanna use but if you***'
+
+ ***Wan2.1 Native Module for videos***
 
 https://huggingface.co/guoyww/animatediff/tree/main
 
