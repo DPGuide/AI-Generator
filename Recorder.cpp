@@ -1,1 +1,336 @@
-// =========================================================// BASTION RECORDER - DIMENSION X (V83 - SYNC FIXED)// =========================================================#define _WIN32_WINNT 0x0601 #include <windows.h>#include <commdlg.h>#include <mfapi.h>#include <mfidl.h>#include <mfreadwrite.h>#include <mmdeviceapi.h>#include <AudioClient.h>#include <gdiplus.h>#include <shlwapi.h>#include <thread>#include <string>#include <vector>#include <chrono>#include <iomanip>#include <sstream>#include <fstream>#pragma comment(lib, "mfplat.lib")#pragma comment(lib, "mfuuid.lib")#pragma comment(lib, "mfreadwrite.lib")#pragma comment(lib, "ole32.lib")#pragma comment(lib, "user32.lib")#pragma comment(lib, "gdi32.lib")#pragma comment(lib, "gdiplus.lib")#pragma comment(lib, "comdlg32.lib")#pragma comment(lib, "shlwapi.lib")// --- SCHNEIDER CORE ---#define _15    if          #define _28    case        #define _30    char        #define _37    break       #define _39    for         #define _41    else        #define _42    else if     #define _43    int         #define _44    bool        #define _50    void        #define _82    switch      #define _86    false       #define _87    std::string #define _89    uint32_t    #define _94    uint64_t    #define _96    return      #define _108   class       #define _113   nullptr     #define _114   while       #define _126   public      #define _128   true        #define _184   uint8_t     #define EQ     ==          using namespace Gdiplus;// GLOBALSHWND hStartBtn, hStopBtn, hQualBtn, hMainWnd;_30 globalFilePath[260] = "capture_v83.mp4"; Image* pBackgroundImg = _113;_87 currentStatusText = "READY"; _43 currentQualIdx = 3; _89 bitrates[] = { 500000, 1500000, 10000000, 20000000 };const _30* qualLabels[] = { "Q: LOW", "Q: STD", "Q: HD", "Q: ULTRA" };// =========================================================// BASTION ENGINE (Post-Processing)// =========================================================_108 BastionEngine {_126:    _50 PostProcessMP4(_87 inP) {        std::ifstream in(inP, std::ios::binary | std::ios::ate);        _15 (!in.is_open()) _96;        _94 totalSize = in.tellg();        _94 zC = 0;        _15 (totalSize > 1024) {            _94 sc = 65535; _15 (totalSize < sc) sc = totalSize;            in.seekg(-((std::streamoff)sc), std::ios::end);            std::vector<_184> tl(sc); in.read((_30*)tl.data(), sc);            int idx = (int)sc - 1;            _114 (idx >= 0 && tl[idx] EQ 0) { zC++; idx--; }        }        _94 effSz = totalSize - zC;        in.seekg(0, std::ios::beg);        std::vector<_30> buffer(effSz); in.read(buffer.data(), effSz);        in.close();        std::ofstream out(inP, std::ios::binary | std::ios::trunc);        out.write(buffer.data(), effSz); out.close();    }};// =========================================================// BASTION RECORDER (Core Logic)// =========================================================_108 BastionRecorder {_126:    _44 isRunning = _86;    IMFSinkWriter* pWriter = _113;    _89 vidStream = 0, audStream = 1;    _44 SelectOutputFile(HWND hwnd) {        OPENFILENAMEA ofn = {0}; ofn.lStructSize = sizeof(ofn);        ofn.hwndOwner = hwnd; ofn.lpstrFilter = "Video Files (*.mp4)\0*.mp4\0";        ofn.lpstrFile = globalFilePath; ofn.nMaxFile = 260;        ofn.Flags = OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST;        ofn.lpstrDefExt = "mp4";        _96 GetSaveFileNameA(&ofn);    }    _87 FormatTime(_43 totalSecs) {        _43 m = totalSecs / 60; _43 s = totalSecs % 60;        std::stringstream ss;        ss << "REC " << std::setw(2) << std::setfill('0') << m << ":" << std::setw(2) << std::setfill('0') << s;        _96 ss.str();    }    _50 RecordingLoop() {        CoInitializeEx(_113, COINIT_MULTITHREADED);         MFStartup(MF_VERSION);        _43 w = GetSystemMetrics(SM_CXSCREEN); _43 h = GetSystemMetrics(SM_CYSCREEN);        wchar_t wPath[260]; MultiByteToWideChar(CP_ACP, 0, globalFilePath, -1, wPath, 260);        IMMDeviceEnumerator* pEnum = _113; CoCreateInstance(__uuidof(MMDeviceEnumerator), _113, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&pEnum);        IMMDevice* pDev = _113; pEnum->GetDefaultAudioEndpoint(eRender, eConsole, &pDev);        IAudioClient* pAudCli = _113; pDev->Activate(__uuidof(IAudioClient), CLSCTX_ALL, _113, (void**)&pAudCli);        WAVEFORMATEX* pwfx = _113; pAudCli->GetMixFormat(&pwfx);        pAudCli->Initialize(AUDCLNT_SHAREMODE_SHARED, AUDCLNT_STREAMFLAGS_LOOPBACK, 10000000, 0, pwfx, _113);        IAudioCaptureClient* pCapt = _113; pAudCli->GetService(__uuidof(IAudioCaptureClient), (void**)&pCapt);        pAudCli->Start();         HRESULT hr = MFCreateSinkWriterFromURL(wPath, _113, _113, &pWriter);        _15 (FAILED(hr)) { isRunning = _86; _96; }        IMFMediaType* pVidOut = _113; MFCreateMediaType(&pVidOut);        pVidOut->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video);        pVidOut->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_H264);        pVidOut->SetUINT32(MF_MT_AVG_BITRATE, bitrates[currentQualIdx]);         MFSetAttributeSize(pVidOut, MF_MT_FRAME_SIZE, w, h);        MFSetAttributeRatio(pVidOut, MF_MT_FRAME_RATE, 30, 1);        pVidOut->SetUINT32(MF_MT_INTERLACE_MODE, MFVideoInterlace_Progressive);        pWriter->AddStream(pVidOut, (DWORD*)&vidStream);                IMFMediaType* pVidIn = _113; MFCreateMediaType(&pVidIn);        pVidIn->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video);        pVidIn->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_RGB32);        MFSetAttributeSize(pVidIn, MF_MT_FRAME_SIZE, w, h);        pWriter->SetInputMediaType(vidStream, pVidIn, _113);        pVidOut->Release(); pVidIn->Release();        IMFMediaType* pAudOut = _113; MFCreateMediaType(&pAudOut);        pAudOut->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Audio);        pAudOut->SetGUID(MF_MT_SUBTYPE, MFAudioFormat_AAC);        pAudOut->SetUINT32(MF_MT_AUDIO_SAMPLES_PER_SECOND, 44100);         pAudOut->SetUINT32(MF_MT_AUDIO_NUM_CHANNELS, 2);        pAudOut->SetUINT32(MF_MT_AUDIO_AVG_BYTES_PER_SECOND, 32000);         pWriter->AddStream(pAudOut, (DWORD*)&audStream);                IMFMediaType* pAudIn = _113; MFCreateMediaType(&pAudIn);        MFInitMediaTypeFromWaveFormatEx(pAudIn, pwfx, sizeof(WAVEFORMATEX) + pwfx->cbSize);        pWriter->SetInputMediaType(audStream, pAudIn, _113);        pAudOut->Release(); pAudIn->Release();        pWriter->BeginWriting();        auto startClock = std::chrono::high_resolution_clock::now();        _94 totalAudioSamples = 0; // WICHTIG: Wieder da für perfekte Tonqualität!                HDC hdcS = GetDC(_113);         HDC hdcM = CreateCompatibleDC(hdcS);        HBITMAP hbm = CreateCompatibleBitmap(hdcS, w, h);         HBITMAP hbmOld = (HBITMAP)SelectObject(hdcM, hbm);        _94 nextVideoTs = 0;         const _94 frameDuration = 10000000 / 30;         _114 (isRunning) {            auto now = std::chrono::high_resolution_clock::now();            std::chrono::duration<double> el = now - startClock;            _94 currentSystemTs = (_94)(el.count() * 10000000);             // --- 1. ECHTE AUDIO DATEN SCHREIBEN ---            _89 pktSz = 0; pCapt->GetNextPacketSize(&pktSz);            _114 (pktSz > 0) {                _184* pD; _89 frames; DWORD flags;                pCapt->GetBuffer(&pD, &frames, &flags, _113, _113);                                _15 (frames > 0) {                    IMFSample* pAS; IMFMediaBuffer* pAB;                     MFCreateMemoryBuffer(frames * pwfx->nBlockAlign, &pAB);                    _184* pABufD; pAB->Lock(&pABufD, _113, _113);                                        _15 (flags & AUDCLNT_BUFFERFLAGS_SILENT) {                        memset(pABufD, 0, frames * pwfx->nBlockAlign);                    } _41 {                        memcpy(pABufD, pD, frames * pwfx->nBlockAlign);                    }                                        pAB->Unlock(); pAB->SetCurrentLength(frames * pwfx->nBlockAlign);                    MFCreateSample(&pAS); pAS->AddBuffer(pAB);                                        _94 audTs = (totalAudioSamples * 10000000) / pwfx->nSamplesPerSec;                    pAS->SetSampleTime(audTs);                    _94 dur = (frames * 10000000) / pwfx->nSamplesPerSec;                    pAS->SetSampleDuration(dur);                                        totalAudioSamples += frames;                     pWriter->WriteSample(audStream, pAS);                    pAS->Release(); pAB->Release();                }                pCapt->ReleaseBuffer(frames);                pCapt->GetNextPacketSize(&pktSz);            }            // --- 2. SILENCE INJECTOR (Der Lückenfüller) ---            // Wenn der Ton mehr als 50ms hinter dem Video herhinkt (weil Stille herrscht),            // generieren wir künstliche Stille, damit die MP4-Spur nicht reißt!            _94 currentAudTs = (totalAudioSamples * 10000000) / pwfx->nSamplesPerSec;            _15 (currentSystemTs > currentAudTs + 500000) {                 _89 missingFrames = (_89)(((currentSystemTs - currentAudTs) * pwfx->nSamplesPerSec) / 10000000);                _15 (missingFrames > 0) {                    IMFSample* pAS; IMFMediaBuffer* pAB;                     MFCreateMemoryBuffer(missingFrames * pwfx->nBlockAlign, &pAB);                    _184* pABufD; pAB->Lock(&pABufD, _113, _113);                                        memset(pABufD, 0, missingFrames * pwfx->nBlockAlign); // Künstliche Nullen schreiben                                        pAB->Unlock(); pAB->SetCurrentLength(missingFrames * pwfx->nBlockAlign);                    MFCreateSample(&pAS); pAS->AddBuffer(pAB);                                        pAS->SetSampleTime(currentAudTs);                    _94 dur = (missingFrames * 10000000) / pwfx->nSamplesPerSec;                    pAS->SetSampleDuration(dur);                                        totalAudioSamples += missingFrames;                     pWriter->WriteSample(audStream, pAS);                    pAS->Release(); pAB->Release();                }            }            // --- 3. VIDEO DATEN SCHREIBEN ---            _15 (currentSystemTs >= nextVideoTs) {                StretchBlt(hdcM, 0, 0, w, h, hdcS, 0, h, w, -h, SRCCOPY);                 _89 bSz = w * h * 4;                IMFSample* pSmp; IMFMediaBuffer* pBuf; MFCreateMemoryBuffer(bSz, &pBuf);                BYTE* pData; pBuf->Lock(&pData, _113, _113);                GetBitmapBits(hbm, bSz, pData);                 pBuf->Unlock(); pBuf->SetCurrentLength(bSz);                                MFCreateSample(&pSmp); pSmp->AddBuffer(pBuf);                pSmp->SetSampleTime(nextVideoTs);                 pSmp->SetSampleDuration(frameDuration);                pWriter->WriteSample(vidStream, pSmp);                pSmp->Release(); pBuf->Release();                nextVideoTs += frameDuration;                                _15 ((nextVideoTs / frameDuration) % 30 EQ 0) {                    currentStatusText = FormatTime((_43)(nextVideoTs / 10000000));                    InvalidateRect(hMainWnd, _113, _86);                }            }            Sleep(1);         }                SelectObject(hdcM, hbmOld); DeleteObject(hbm); DeleteDC(hdcM); ReleaseDC(_113, hdcS);        pAudCli->Stop(); pWriter->Finalize(); pWriter->Release();        pAudCli->Release(); pDev->Release(); pEnum->Release();         MFShutdown(); CoUninitialize();                currentStatusText = "SAVED.";         InvalidateRect(hMainWnd, _113, _86);    }};BastionRecorder engine;LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {    _82 (msg) {        _28 WM_CREATE: {            hStartBtn = CreateWindowA("BUTTON", "SAVE & START", WS_VISIBLE|WS_CHILD, 20, 50, 90, 45, hwnd, (HMENU)1, _113, _113);            hStopBtn = CreateWindowA("BUTTON", "STOP", WS_VISIBLE|WS_CHILD, 120, 50, 90, 45, hwnd, (HMENU)2, _113, _113);            hQualBtn = CreateWindowA("BUTTON", qualLabels[currentQualIdx], WS_VISIBLE|WS_CHILD, 220, 50, 90, 45, hwnd, (HMENU)3, _113, _113);            HFONT hFont = CreateFontA(14, 0, 0, 0, FW_BOLD, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, "Segoe UI");            SendMessage(hStartBtn, WM_SETFONT, (WPARAM)hFont, 1);            SendMessage(hStopBtn, WM_SETFONT, (WPARAM)hFont, 1);            SendMessage(hQualBtn, WM_SETFONT, (WPARAM)hFont, 1);        } _37;        _28 WM_PAINT: {            PAINTSTRUCT ps; HDC hdc = BeginPaint(hwnd, &ps);            Graphics g(hdc);            _15 (pBackgroundImg && pBackgroundImg->GetLastStatus() EQ Ok) {                g.DrawImage(pBackgroundImg, 0, 0, 340, 160);            } _41 { g.Clear(Color(240, 240, 240)); }            _15 (engine.isRunning && (GetTickCount() / 500) % 2 EQ 0) {                SolidBrush b(Color(255, 255, 0, 0));                g.FillEllipse(&b, 25, 22, 12, 12);            }            Color textColor = engine.isRunning ? Color(255, 255, 0, 0) : Color(255, 0, 200, 0);            FontFamily ff(L"Arial"); Font f(&ff, 12, FontStyleBold, UnitPoint);            SolidBrush br(textColor);            std::wstring ws = std::wstring(currentStatusText.begin(), currentStatusText.end());            g.DrawString(ws.c_str(), -1, &f, PointF(45.0f, 20.0f), &br);            EndPaint(hwnd, &ps);        } _37;        _28 WM_COMMAND: {            _15 (LOWORD(wp) EQ 1 && !engine.isRunning) {                _15 (engine.SelectOutputFile(hwnd)) {                    engine.isRunning = _128;                    EnableWindow(hQualBtn, _86);                     std::thread t(&BastionRecorder::RecordingLoop, &engine); t.detach();                }            }            _42 (LOWORD(wp) EQ 2) { engine.isRunning = _86; EnableWindow(hQualBtn, _128); }            _42 (LOWORD(wp) EQ 3 && !engine.isRunning) {                currentQualIdx++; _15 (currentQualIdx > 3) currentQualIdx = 0;                 SetWindowTextA(hQualBtn, qualLabels[currentQualIdx]);            }        } _37;        _28 WM_DESTROY: PostQuitMessage(0); _96 0;    }    _96 DefWindowProcA(hwnd, msg, wp, lp);}_43 WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, _30* lpC, _43 nS) {    CoInitializeEx(_113, COINIT_APARTMENTTHREADED);    GdiplusStartupInput gsi; ULONG_PTR gst; GdiplusStartup(&gst, &gsi, _113);    if (PathFileExistsA("logo.jpg")) pBackgroundImg = new Image(L"logo.jpg");    WNDCLASSA wc = {0}; wc.lpfnWndProc = WndProc; wc.hInstance = hI;    wc.hIcon = LoadIcon(_113, IDI_APPLICATION); wc.hCursor = LoadCursor(_113, IDC_ARROW);    wc.lpszClassName = "BASTION_V83"; RegisterClassA(&wc);    hMainWnd = CreateWindowA("BASTION_V83", "BASTION REC 83 (SELECTOR)", WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_VISIBLE|WS_CLIPCHILDREN, CW_USEDEFAULT, CW_USEDEFAULT, 340, 160, _113, _113, hI, _113);    MSG m; _114 (GetMessage(&m, _113, 0, 0)) { TranslateMessage(&m); DispatchMessage(&m); }    if(pBackgroundImg) delete pBackgroundImg; GdiplusShutdown(gst); CoUninitialize(); _96 0;}
+// =========================================================
+// BASTION RECORDER - DIMENSION X (V83 - SYNC FIXED)
+// =========================================================
+#define _WIN32_WINNT 0x0601 
+#include <windows.h>
+#include <commdlg.h>
+#include <mfapi.h>
+#include <mfidl.h>
+#include <mfreadwrite.h>
+#include <mmdeviceapi.h>
+#include <AudioClient.h>
+#include <gdiplus.h>
+#include <shlwapi.h>
+#include <thread>
+#include <string>
+#include <vector>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
+#include <fstream>
+
+#pragma comment(lib, "mfplat.lib")
+#pragma comment(lib, "mfuuid.lib")
+#pragma comment(lib, "mfreadwrite.lib")
+#pragma comment(lib, "ole32.lib")
+#pragma comment(lib, "user32.lib")
+#pragma comment(lib, "gdi32.lib")
+#pragma comment(lib, "gdiplus.lib")
+#pragma comment(lib, "comdlg32.lib")
+#pragma comment(lib, "shlwapi.lib")
+
+// --- SCHNEIDER CORE ---
+#define _15    if          
+#define _28    case        
+#define _30    char        
+#define _37    break       
+#define _39    for         
+#define _41    else        
+#define _42    else if     
+#define _43    int         
+#define _44    bool        
+#define _50    void        
+#define _82    switch      
+#define _86    false       
+#define _87    std::string 
+#define _89    uint32_t    
+#define _94    uint64_t    
+#define _96    return      
+#define _108   class       
+#define _113   nullptr     
+#define _114   while       
+#define _126   public      
+#define _128   true        
+#define _184   uint8_t     
+#define EQ     ==          
+
+using namespace Gdiplus;
+
+// GLOBALS
+HWND hStartBtn, hStopBtn, hQualBtn, hMainWnd;
+_30 globalFilePath[260] = "capture_v83.mp4"; 
+Image* pBackgroundImg = _113;
+_87 currentStatusText = "READY"; 
+
+_43 currentQualIdx = 3; 
+_89 bitrates[] = { 500000, 1500000, 10000000, 20000000 };
+const _30* qualLabels[] = { "Q: LOW", "Q: STD", "Q: HD", "Q: ULTRA" };
+
+// =========================================================
+// BASTION ENGINE (Post-Processing)
+// =========================================================
+_108 BastionEngine {
+_126:
+    _50 PostProcessMP4(_87 inP) {
+        std::ifstream in(inP, std::ios::binary | std::ios::ate);
+        _15 (!in.is_open()) _96;
+        _94 totalSize = in.tellg();
+        _94 zC = 0;
+        _15 (totalSize > 1024) {
+            _94 sc = 65535; _15 (totalSize < sc) sc = totalSize;
+            in.seekg(-((std::streamoff)sc), std::ios::end);
+            std::vector<_184> tl(sc); in.read((_30*)tl.data(), sc);
+            int idx = (int)sc - 1;
+            _114 (idx >= 0 && tl[idx] EQ 0) { zC++; idx--; }
+        }
+        _94 effSz = totalSize - zC;
+        in.seekg(0, std::ios::beg);
+        std::vector<_30> buffer(effSz); in.read(buffer.data(), effSz);
+        in.close();
+        std::ofstream out(inP, std::ios::binary | std::ios::trunc);
+        out.write(buffer.data(), effSz); out.close();
+    }
+};
+
+// =========================================================
+// BASTION RECORDER (Core Logic)
+// =========================================================
+_108 BastionRecorder {
+_126:
+    _44 isRunning = _86;
+    IMFSinkWriter* pWriter = _113;
+    _89 vidStream = 0, audStream = 1;
+
+    _44 SelectOutputFile(HWND hwnd) {
+        OPENFILENAMEA ofn = {0}; ofn.lStructSize = sizeof(ofn);
+        ofn.hwndOwner = hwnd; ofn.lpstrFilter = "Video Files (*.mp4)\0*.mp4\0";
+        ofn.lpstrFile = globalFilePath; ofn.nMaxFile = 260;
+        ofn.Flags = OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST;
+        ofn.lpstrDefExt = "mp4";
+        _96 GetSaveFileNameA(&ofn);
+    }
+
+    _87 FormatTime(_43 totalSecs) {
+        _43 m = totalSecs / 60; _43 s = totalSecs % 60;
+        std::stringstream ss;
+        ss << "REC " << std::setw(2) << std::setfill('0') << m << ":" << std::setw(2) << std::setfill('0') << s;
+        _96 ss.str();
+    }
+
+    _50 RecordingLoop() {
+        CoInitializeEx(_113, COINIT_MULTITHREADED); 
+        MFStartup(MF_VERSION);
+        _43 w = GetSystemMetrics(SM_CXSCREEN); _43 h = GetSystemMetrics(SM_CYSCREEN);
+        wchar_t wPath[260]; MultiByteToWideChar(CP_ACP, 0, globalFilePath, -1, wPath, 260);
+
+        IMMDeviceEnumerator* pEnum = _113; CoCreateInstance(__uuidof(MMDeviceEnumerator), _113, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&pEnum);
+        IMMDevice* pDev = _113; pEnum->GetDefaultAudioEndpoint(eRender, eConsole, &pDev);
+        IAudioClient* pAudCli = _113; pDev->Activate(__uuidof(IAudioClient), CLSCTX_ALL, _113, (void**)&pAudCli);
+        WAVEFORMATEX* pwfx = _113; pAudCli->GetMixFormat(&pwfx);
+        pAudCli->Initialize(AUDCLNT_SHAREMODE_SHARED, AUDCLNT_STREAMFLAGS_LOOPBACK, 10000000, 0, pwfx, _113);
+        IAudioCaptureClient* pCapt = _113; pAudCli->GetService(__uuidof(IAudioCaptureClient), (void**)&pCapt);
+        pAudCli->Start(); 
+
+        HRESULT hr = MFCreateSinkWriterFromURL(wPath, _113, _113, &pWriter);
+        _15 (FAILED(hr)) { isRunning = _86; _96; }
+
+        IMFMediaType* pVidOut = _113; MFCreateMediaType(&pVidOut);
+        pVidOut->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video);
+        pVidOut->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_H264);
+        pVidOut->SetUINT32(MF_MT_AVG_BITRATE, bitrates[currentQualIdx]); 
+        MFSetAttributeSize(pVidOut, MF_MT_FRAME_SIZE, w, h);
+        MFSetAttributeRatio(pVidOut, MF_MT_FRAME_RATE, 30, 1);
+        pVidOut->SetUINT32(MF_MT_INTERLACE_MODE, MFVideoInterlace_Progressive);
+        pWriter->AddStream(pVidOut, (DWORD*)&vidStream);
+        
+        IMFMediaType* pVidIn = _113; MFCreateMediaType(&pVidIn);
+        pVidIn->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video);
+        pVidIn->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_RGB32);
+        MFSetAttributeSize(pVidIn, MF_MT_FRAME_SIZE, w, h);
+        pWriter->SetInputMediaType(vidStream, pVidIn, _113);
+        pVidOut->Release(); pVidIn->Release();
+
+        IMFMediaType* pAudOut = _113; MFCreateMediaType(&pAudOut);
+        pAudOut->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Audio);
+        pAudOut->SetGUID(MF_MT_SUBTYPE, MFAudioFormat_AAC);
+        pAudOut->SetUINT32(MF_MT_AUDIO_SAMPLES_PER_SECOND, 44100); 
+        pAudOut->SetUINT32(MF_MT_AUDIO_NUM_CHANNELS, 2);
+        pAudOut->SetUINT32(MF_MT_AUDIO_AVG_BYTES_PER_SECOND, 32000); 
+        pWriter->AddStream(pAudOut, (DWORD*)&audStream);
+        
+        IMFMediaType* pAudIn = _113; MFCreateMediaType(&pAudIn);
+        MFInitMediaTypeFromWaveFormatEx(pAudIn, pwfx, sizeof(WAVEFORMATEX) + pwfx->cbSize);
+        pWriter->SetInputMediaType(audStream, pAudIn, _113);
+        pAudOut->Release(); pAudIn->Release();
+
+        pWriter->BeginWriting();
+        auto startClock = std::chrono::high_resolution_clock::now();
+        _94 totalAudioSamples = 0; // WICHTIG: Wieder da für perfekte Tonqualität!
+        
+        HDC hdcS = GetDC(_113); 
+        HDC hdcM = CreateCompatibleDC(hdcS);
+        HBITMAP hbm = CreateCompatibleBitmap(hdcS, w, h); 
+        HBITMAP hbmOld = (HBITMAP)SelectObject(hdcM, hbm);
+
+        _94 nextVideoTs = 0; 
+        const _94 frameDuration = 10000000 / 30; 
+
+        _114 (isRunning) {
+            auto now = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> el = now - startClock;
+            _94 currentSystemTs = (_94)(el.count() * 10000000); 
+
+            // --- 1. ECHTE AUDIO DATEN SCHREIBEN ---
+            _89 pktSz = 0; pCapt->GetNextPacketSize(&pktSz);
+            _114 (pktSz > 0) {
+                _184* pD; _89 frames; DWORD flags;
+                pCapt->GetBuffer(&pD, &frames, &flags, _113, _113);
+                
+                _15 (frames > 0) {
+                    IMFSample* pAS; IMFMediaBuffer* pAB; 
+                    MFCreateMemoryBuffer(frames * pwfx->nBlockAlign, &pAB);
+                    _184* pABufD; pAB->Lock(&pABufD, _113, _113);
+                    
+                    _15 (flags & AUDCLNT_BUFFERFLAGS_SILENT) {
+                        memset(pABufD, 0, frames * pwfx->nBlockAlign);
+                    } _41 {
+                        memcpy(pABufD, pD, frames * pwfx->nBlockAlign);
+                    }
+                    
+                    pAB->Unlock(); pAB->SetCurrentLength(frames * pwfx->nBlockAlign);
+                    MFCreateSample(&pAS); pAS->AddBuffer(pAB);
+                    
+                    _94 audTs = (totalAudioSamples * 10000000) / pwfx->nSamplesPerSec;
+                    pAS->SetSampleTime(audTs);
+                    _94 dur = (frames * 10000000) / pwfx->nSamplesPerSec;
+                    pAS->SetSampleDuration(dur);
+                    
+                    totalAudioSamples += frames; 
+                    pWriter->WriteSample(audStream, pAS);
+                    pAS->Release(); pAB->Release();
+                }
+                pCapt->ReleaseBuffer(frames);
+                pCapt->GetNextPacketSize(&pktSz);
+            }
+
+            // --- 2. SILENCE INJECTOR (Der Lückenfüller) ---
+            // Wenn der Ton mehr als 50ms hinter dem Video herhinkt (weil Stille herrscht),
+            // generieren wir künstliche Stille, damit die MP4-Spur nicht reißt!
+            _94 currentAudTs = (totalAudioSamples * 10000000) / pwfx->nSamplesPerSec;
+            _15 (currentSystemTs > currentAudTs + 500000) { 
+                _89 missingFrames = (_89)(((currentSystemTs - currentAudTs) * pwfx->nSamplesPerSec) / 10000000);
+                _15 (missingFrames > 0) {
+                    IMFSample* pAS; IMFMediaBuffer* pAB; 
+                    MFCreateMemoryBuffer(missingFrames * pwfx->nBlockAlign, &pAB);
+                    _184* pABufD; pAB->Lock(&pABufD, _113, _113);
+                    
+                    memset(pABufD, 0, missingFrames * pwfx->nBlockAlign); // Künstliche Nullen schreiben
+                    
+                    pAB->Unlock(); pAB->SetCurrentLength(missingFrames * pwfx->nBlockAlign);
+                    MFCreateSample(&pAS); pAS->AddBuffer(pAB);
+                    
+                    pAS->SetSampleTime(currentAudTs);
+                    _94 dur = (missingFrames * 10000000) / pwfx->nSamplesPerSec;
+                    pAS->SetSampleDuration(dur);
+                    
+                    totalAudioSamples += missingFrames; 
+                    pWriter->WriteSample(audStream, pAS);
+                    pAS->Release(); pAB->Release();
+                }
+            }
+
+            // --- 3. VIDEO DATEN SCHREIBEN ---
+            _15 (currentSystemTs >= nextVideoTs) {
+                StretchBlt(hdcM, 0, 0, w, h, hdcS, 0, h, w, -h, SRCCOPY); 
+                _89 bSz = w * h * 4;
+                IMFSample* pSmp; IMFMediaBuffer* pBuf; MFCreateMemoryBuffer(bSz, &pBuf);
+                BYTE* pData; pBuf->Lock(&pData, _113, _113);
+                GetBitmapBits(hbm, bSz, pData); 
+                pBuf->Unlock(); pBuf->SetCurrentLength(bSz);
+                
+                MFCreateSample(&pSmp); pSmp->AddBuffer(pBuf);
+                pSmp->SetSampleTime(nextVideoTs); 
+                pSmp->SetSampleDuration(frameDuration);
+                pWriter->WriteSample(vidStream, pSmp);
+                pSmp->Release(); pBuf->Release();
+
+                nextVideoTs += frameDuration;
+                
+                _15 ((nextVideoTs / frameDuration) % 30 EQ 0) {
+                    currentStatusText = FormatTime((_43)(nextVideoTs / 10000000));
+                    InvalidateRect(hMainWnd, _113, _86);
+                }
+            }
+            Sleep(1); 
+        }
+        
+        SelectObject(hdcM, hbmOld); DeleteObject(hbm); DeleteDC(hdcM); ReleaseDC(_113, hdcS);
+        pAudCli->Stop(); pWriter->Finalize(); pWriter->Release();
+        pAudCli->Release(); pDev->Release(); pEnum->Release(); 
+        MFShutdown(); CoUninitialize();
+        
+        currentStatusText = "SAVED."; 
+        InvalidateRect(hMainWnd, _113, _86);
+    }
+};
+
+BastionRecorder engine;
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
+    _82 (msg) {
+        _28 WM_CREATE: {
+            hStartBtn = CreateWindowA("BUTTON", "SAVE & START", WS_VISIBLE|WS_CHILD, 20, 50, 90, 45, hwnd, (HMENU)1, _113, _113);
+            hStopBtn = CreateWindowA("BUTTON", "STOP", WS_VISIBLE|WS_CHILD, 120, 50, 90, 45, hwnd, (HMENU)2, _113, _113);
+            hQualBtn = CreateWindowA("BUTTON", qualLabels[currentQualIdx], WS_VISIBLE|WS_CHILD, 220, 50, 90, 45, hwnd, (HMENU)3, _113, _113);
+            HFONT hFont = CreateFontA(14, 0, 0, 0, FW_BOLD, 0, 0, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, "Segoe UI");
+            SendMessage(hStartBtn, WM_SETFONT, (WPARAM)hFont, 1);
+            SendMessage(hStopBtn, WM_SETFONT, (WPARAM)hFont, 1);
+            SendMessage(hQualBtn, WM_SETFONT, (WPARAM)hFont, 1);
+        } _37;
+        _28 WM_PAINT: {
+            PAINTSTRUCT ps; HDC hdc = BeginPaint(hwnd, &ps);
+            Graphics g(hdc);
+            _15 (pBackgroundImg && pBackgroundImg->GetLastStatus() EQ Ok) {
+                g.DrawImage(pBackgroundImg, 0, 0, 340, 160);
+            } _41 { g.Clear(Color(240, 240, 240)); }
+            _15 (engine.isRunning && (GetTickCount() / 500) % 2 EQ 0) {
+                SolidBrush b(Color(255, 255, 0, 0));
+                g.FillEllipse(&b, 25, 22, 12, 12);
+            }
+            Color textColor = engine.isRunning ? Color(255, 255, 0, 0) : Color(255, 0, 200, 0);
+            FontFamily ff(L"Arial"); Font f(&ff, 12, FontStyleBold, UnitPoint);
+            SolidBrush br(textColor);
+            std::wstring ws = std::wstring(currentStatusText.begin(), currentStatusText.end());
+            g.DrawString(ws.c_str(), -1, &f, PointF(45.0f, 20.0f), &br);
+            EndPaint(hwnd, &ps);
+        } _37;
+        _28 WM_COMMAND: {
+            _15 (LOWORD(wp) EQ 1 && !engine.isRunning) {
+                _15 (engine.SelectOutputFile(hwnd)) {
+                    engine.isRunning = _128;
+                    EnableWindow(hQualBtn, _86); 
+                    std::thread t(&BastionRecorder::RecordingLoop, &engine); t.detach();
+                }
+            }
+            _42 (LOWORD(wp) EQ 2) { engine.isRunning = _86; EnableWindow(hQualBtn, _128); }
+            _42 (LOWORD(wp) EQ 3 && !engine.isRunning) {
+                currentQualIdx++; _15 (currentQualIdx > 3) currentQualIdx = 0; 
+                SetWindowTextA(hQualBtn, qualLabels[currentQualIdx]);
+            }
+        } _37;
+        _28 WM_DESTROY: PostQuitMessage(0); _96 0;
+    }
+    _96 DefWindowProcA(hwnd, msg, wp, lp);
+}
+
+_43 WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, _30* lpC, _43 nS) {
+    CoInitializeEx(_113, COINIT_APARTMENTTHREADED);
+    GdiplusStartupInput gsi; ULONG_PTR gst; GdiplusStartup(&gst, &gsi, _113);
+    if (PathFileExistsA("logo.jpg")) pBackgroundImg = new Image(L"logo.jpg");
+    WNDCLASSA wc = {0}; wc.lpfnWndProc = WndProc; wc.hInstance = hI;
+    wc.hIcon = LoadIcon(_113, IDI_APPLICATION); wc.hCursor = LoadCursor(_113, IDC_ARROW);
+    wc.lpszClassName = "BASTION_V83"; RegisterClassA(&wc);
+    hMainWnd = CreateWindowA("BASTION_V83", "BASTION REC 83 (SELECTOR)", WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_VISIBLE|WS_CLIPCHILDREN, CW_USEDEFAULT, CW_USEDEFAULT, 340, 160, _113, _113, hI, _113);
+    MSG m; _114 (GetMessage(&m, _113, 0, 0)) { TranslateMessage(&m); DispatchMessage(&m); }
+    if(pBackgroundImg) delete pBackgroundImg; GdiplusShutdown(gst); CoUninitialize(); _96 0;
+}
