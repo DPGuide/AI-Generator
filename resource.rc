@@ -1,0 +1,8 @@
+// Icon
+100 ICON "logo.ico"
+
+// Manifest
+1 RT_MANIFEST "app.manifest"
+
+// JPG/PNG als GANZ EIGENER TYP ("MYIMAGE")
+101 MYIMAGE "logo.jpg"
