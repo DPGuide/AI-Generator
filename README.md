@@ -1,4 +1,4 @@
-***only pictures are working well with GTX1060 yes i can take 1280x720***
+***only pictures are working well, in those codes and versions! with GTX1060 yes i can take 1280x720***
 
 <img width="513" height="549" alt="image" src="https://github.com/user-attachments/assets/3f75b254-36e8-43ce-9e94-d06ca52c8a11" />
 
