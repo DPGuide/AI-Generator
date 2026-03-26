@@ -55,31 +55,3 @@ https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64
 *.exe
 
 https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb1e4/sd-master-c5eb1e4-bin-win-cuda12-x64.zip
-
-***open with the tools youre models and motions,
-but the *.dll annd the *.exe etc in same folder where The Bastion is***
-
-***Bastion AI Nexus - Tool new function:***
-What does this "seed" do?
-In the AI ​​world (as with Stable Diffusion or AnimateDiff), every image or video is initially created from pure,
-random "image noise." The seed determines what this noise looks like.
-
-Fixed value (e.g., ***42***): If you leave the value at 42, load the same image, and enter the same text,
-the AI ​​will produce the exact same video every time. This is extremely important
-if you're refining a prompt and want to see what changes without randomness interfering.
-
-The ***"R"*** button: When you click the R (Random), your C++ program generates a completely new,
-random number in the field. When you then click Generate,
-the AI ​​calculates a completely different movement for your image, even though the text remains the same!
-
-Bonus: Find Faster & Better Models
-
-***Civitai*** (The best place to start): Search for "SD 1.5 Checkpoints". Popular classics include Realistic Vision and Epic Realism. ***Not Tested Yet**
-
-
-***Hugging Face*** (The technical source): ***only few i have tested**
-
-***Realistic Vision V6.0 B1*** – Enormous level of detail for humans.***Not Tested Yet**
-
-***DreamShaper 8*** – Very versatile, great colors.***Not Tested Yet**
-
