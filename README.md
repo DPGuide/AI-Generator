@@ -1,3 +1,8 @@
+<img width="513" height="549" alt="image" src="https://github.com/user-attachments/assets/3f75b254-36e8-43ce-9e94-d06ca52c8a11" />
+
+<img width="1142" height="686" alt="image" src="https://github.com/user-attachments/assets/a2dc83e2-f9a1-48c5-bab0-47e7edfce526" />
+
+
 ***For unpack sd-server.exe.tba & sd-cli.exe.tba,***
 
 ***please use my ArShiva,***
@@ -47,20 +52,12 @@ https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_
 
 https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_network
 
-
 *.exe
 
 https://github.com/leejet/stable-diffusion.cpp/releases/download/master-505-c5eb1e4/sd-master-c5eb1e4-bin-win-cuda12-x64.zip
 
 ***open with the tools youre models and motions,
 but the *.dll annd the *.exe etc in same folder where The Bastion is***
-
-<img width="706" height="371" alt="image" src="https://github.com/user-attachments/assets/2101c434-a4a1-40a2-999e-4573760afadc" />
-
-
-***every 10 % the preview should be updated! LOL he makes from a Anime Pic a real version***
-<img width="764" height="626" alt="image" src="https://github.com/user-attachments/assets/d22f6e8f-3f6d-4c0c-9198-c07a9bec1e0a" />
-
 
 ***Bastion AI Nexus - Tool new function:***
 What does this "seed" do?
